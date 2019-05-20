@@ -12,7 +12,7 @@ function* saveSettings() {
   saveObject('settings', settings)
 }
 
-function* initApp() {
+function* initTheme() {
   const theme = yield select(s => s.settings.theme)
   yield put({ type: actions.settings.setTheme, theme })
 }
@@ -20,6 +20,6 @@ function* initApp() {
 export default function* () {
   yield all([
     takeLatest(actions.settings.setTheme, setTheme),
-    takeLatest(actions.settings.initApp.request, initApp)
+    takeLatest(actions.settings.initApp.request, initTheme)
   ])
 }

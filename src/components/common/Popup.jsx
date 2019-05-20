@@ -4,24 +4,27 @@ import { Icon } from './index'
 
 const Popup = styled.div`
   z-index: 2000;
-  position: fixed;
   overflow: auto;
+  ${p => p.center ? `
+  position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);`
+  : `
+  margin-top: -30px!important;`}
  `
 const Cover = styled.div`
   z-index: 1000;
-  background-color: rgba(127,127,127,0.5);
-  opacity: 0.5;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
   position: fixed;
+  margin: 0!important;
+  opacity: 0.7;
  `
 
-export default ({ trigger, children }) => {
+export default ({ trigger, center, children }) => {
 
   const [active, setActive] = useState(false)
 
@@ -29,12 +32,11 @@ export default ({ trigger, children }) => {
     <div onClick={() => setActive(true)}>
       {trigger || <Icon>menu</Icon>}
     </div>
-    {active &&
-     <div>
-       <Cover onClick={() => setActive(false)} />
-       <Popup onClick={() => setActive(false)}>
-         {children}
-       </Popup>
-     </div>}
+    {active && <>
+      <Cover onClick={() => setActive(false)} />
+      <Popup onClick={() => setActive(false)} center={center} active={active}>
+        {children}
+      </Popup>
+    </>}
   </>
 }

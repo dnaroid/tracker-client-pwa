@@ -9,7 +9,6 @@
   box-sizing: border-box;
 }
 
-
-div, span {
+div, nav, main {
   background-color: inherit;
 }

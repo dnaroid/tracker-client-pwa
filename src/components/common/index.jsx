@@ -13,6 +13,7 @@ export const Main = styled.main`
 export const Card = styled.div`
   padding: 20px;
   border: 1px solid currentColor;
+  border-radius: 4px;
 `
 
 export const Button = styled.div`
@@ -25,9 +26,11 @@ export const Button = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  > div { margin-left: 20px; width: 100%; } 
-  > div:first-child { margin-left: 0; } 
+  align-items: center;
+  justify-content: ${p => p.start ? 'flex-start' : `space-between;
+  > div { width: 100%; }`}; 
+  > div { margin-left: 20px; } 
+  > div:first-child { margin-left: 0; }
 `
 
 export const Col = styled.div`

@@ -1,10 +1,8 @@
-import { createBrowserHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import SagaManager from '../helpers/sagas'
 import rootReducer from '../reducers'
-import rootSaga from '../sagas'
-
-export const history = createBrowserHistory()
+import { DEVELOPMENT } from './strings'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -18,28 +16,19 @@ const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(sagaMiddleware)))
 
-//if (module.hot) {
-//  // Enable Webpack hot module replacement for reducers
-//  module.hot.accept('../reducers', () => {
-//    const nextRootReducer = require('../reducers')
-//    store.replaceReducer(nextRootReducer)
-//  })
-//
-//  // Enable Webpack hot module replacement for sagas
-//  let sagaTask = sagaMiddleware.run(function* () {
-//    yield rootSaga()
-//  })
-//  module.hot.accept('../sagas', () => {
-//    const getNewSagas = require('../sagas')
-//    sagaTask.cancel()
-//    sagaTask.done.then(() => {
-//      sagaTask = sagaMiddleware.run(function* replacedSaga(action) {
-//        yield getNewSagas()
-//      })
-//    })
-//  })
-//}
+SagaManager.startSagas(sagaMiddleware)
 
-sagaMiddleware.run(rootSaga)
+if (DEVELOPMENT) {
+  if (module.hot) {
+    module.hot.accept('../reducers', () =>
+      store.replaceReducer(require('../reducers').default)
+    )
+
+    module.hot.accept('../helpers/sagas', () => {
+      SagaManager.cancelSagas(store)
+      require('../helpers/sagas').default.startSagas(sagaMiddleware)
+    })
+  }
+}
 
 export default store

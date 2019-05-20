@@ -10,7 +10,7 @@ export default connect()(() => {
 
   return (
     <div>
-      <a href={ROUTE.Track}>
+      <a href={ROUTE.TRACK}>
         + ADD TRACK
       </a>
       {Object.values([{/*tracks*/ }]).map(t =>

@@ -1,36 +1,17 @@
-import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
-import { ROUTE } from '../config/strings'
-import { Col, Drawer, Icon, Row } from './common'
+import React from 'react'
+import styled from 'styled-components/macro'
 
-export default withRouter(({ history, location }) => {
+const Wrapper = styled.div`
+  margin-left: 40px;
+  height: 30px;
+  line-height: 30px;
+  align-items: center;
+ `
 
-  const [drawerActive, setDrawerActive] = useState(false)
+export default ({ user: { logged } }) => {
 
-  const toggleDrawer = () => {
-    setDrawerActive(!drawerActive)
-  }
-
-  const redirect = route => () => {
-    history.push(route)
-  }
-
-  return <>
-    <Row>
-      <Icon onClick={toggleDrawer}>menu</Icon>
-      {location.pathname}
-    </Row>
-
-    <Drawer active={drawerActive} onClose={toggleDrawer}>
-      <nav>
-        <Col>
-          <br />
-          <div onClick={redirect(ROUTE.Account)}>Authorize</div>
-          <div onClick={redirect(ROUTE.Settings)}>Settings</div>
-          <div onClick={redirect(ROUTE.Tracks)}>Tracks</div>
-        </Col>
-      </nav>
-    </Drawer>
-  </>
-})
+  return <Wrapper>
+    HEADER
+  </Wrapper>
+}
 

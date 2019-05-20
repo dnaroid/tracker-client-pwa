@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import actions from '../actions'
+import Routes from '../routes'
 import { Main } from './common'
 import Header from './Header'
-import Router from './Router'
+import SideBar from './SideBar'
 
-export default connect()(
-  ({ dispatch }) => {
+export default connect(s => ({ user: s.user }))(
+  ({ user, dispatch }) => {
 
     useEffect(() => {
       dispatch({ type: actions.settings.initApp.request })
     }, [])
 
     return <>
-      <Header />
+      <Header user={user} />
+      <SideBar user={user} />
       <Main>
-        <Router />
+        <Routes user={user} />
       </Main>
     </>
   })

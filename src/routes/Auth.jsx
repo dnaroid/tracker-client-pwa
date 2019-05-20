@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import actions from '../actions'
-import { Button, Col, Row, TextInput } from '../components/common'
+import { Button, Col, TextInput } from '../components/common'
 
 export default connect(s => ({ user: s.user }))(
   ({ user, dispatch }) => {
 
-    const updateField = field => value => {
-      dispatch({ type: actions.user.updateField, field, value })
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const login = () => {
+      dispatch({ type: actions.user.login.request, email, password })
+    }
+    const register = () => {
+      dispatch({ type: actions.user.register.request, email, password })
     }
 
     return <Col>
@@ -18,28 +24,24 @@ export default connect(s => ({ user: s.user }))(
         :
         <form>
           <Col>
-            <Row>
-              <TextInput
-                onChange={updateField('email')}
-                value={user.email}
-                label='email'
-                type='email'
-                name='email'
-                autocomplete='username'
-              />
-              <TextInput
-                onChange={updateField('password')}
-                value={user.password}
-                label='password'
-                type='password'
-                name='password'
-                autocomplete='current-password'
-              />
-            </Row>
-            <Row>
-              <Button onClick={() => dispatch({ type: actions.user.login.request })}>Login</Button>
-              <Button onClick={() => dispatch({ type: actions.user.register.request })}>Register</Button>
-            </Row>
+            <TextInput
+              onChange={setEmail}
+              value={email}
+              label='email'
+              type='email'
+              name='email'
+              autocomplete='username'
+            />
+            <TextInput
+              onChange={setPassword}
+              value={password}
+              label='password'
+              type='password'
+              name='password'
+              autocomplete='current-password'
+            />
+            <Button onClick={login}>Login</Button>
+            <Button link onClick={register}>Register</Button>
           </Col>
         </form>}
     </Col>

@@ -3,11 +3,11 @@ export const GLOBAL = window
 export const DEVELOPMENT = GLOBAL && GLOBAL.location.hostname === 'localhost'
 
 export const ROUTE = {
-  Account: '/auth',
-  Tracks: '/',
-  Profile: '/profile',
-  Settings: '/settings',
-  Track: '/track'
+  AUTH: '/auth',
+  TRACKS: '/',
+  PROFILE: '/profile',
+  SETTINGS: '/settings',
+  TRACK: '/track'
 }
 
 export const THEME = {
@@ -18,4 +18,11 @@ export const THEME = {
 export const THEME_STYLE = {
   [THEME.DARK]: 'background-color: black; color: white;',
   [THEME.LIGHT]: 'background-color: white; color: black;'
+}
+
+export const TOKEN = 'token'
+
+export const STATUS = {
+  SUCCESS: 'success',
+  FAIL: 'fail'
 }

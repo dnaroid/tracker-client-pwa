@@ -1,12 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import actions from '../actions'
 import { Col, Select } from '../components/common'
+import { THEME } from '../config/strings'
 
-export default () =>
-  <Col>
+export default connect(s => ({ settings: s.settings }))(
+  ({ dispatch, settings }) => <Col>
     <Select
       label='Theme'
-      items={[1, 2, 3, 4, 5]}
-      //value={settings.theme}
-      //onChange={setTheme}
+      items={Object.values(THEME)}
+      value={settings.theme}
+      onChange={theme => {dispatch({ type: actions.settings.setTheme, theme })}}
     />
-  </Col>
+  </Col>)
+

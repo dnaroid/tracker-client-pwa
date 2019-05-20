@@ -1,4 +1,7 @@
+import { createBrowserHistory } from 'history'
 import { THEME_STYLE } from '../config/strings'
+
+export const history = createBrowserHistory()
 
 export const saveString = (key, value) =>
   localStorage.setItem(key, value)
@@ -20,3 +23,5 @@ export const saveObject = (key, obj) => {
 export const updateTheme = theme => {
   document.body.style = THEME_STYLE[theme]
 }
+
+export const redirect = url => history.push(url)
