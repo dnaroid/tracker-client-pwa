@@ -3,8 +3,10 @@ import { createReducer, setIn } from '../helpers/reducers'
 
 export default createReducer({
 
-  [actions.settings.setTheme]: (s, a) => setIn(s, 'theme', a.theme),
+  [actions.router.updateLocation]: (s, a) => setIn(s, 'location', a.location)
 
-  [actions.settings.update]: (s, a) => a.settings
-
+}, {
+  location: {
+    pathname: '/'
+  }
 })

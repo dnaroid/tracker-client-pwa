@@ -62,7 +62,10 @@ export default ({ items, value, label, onChange }) =>
     <Card>
       <CardLabel>{label}</CardLabel>
       {items.map(item =>
-        <Item onClick={() => {onChange && onChange(item)}}>
+        <Item
+          key={item}
+          onClick={() => {onChange && onChange(item)}}
+        >
           {item === value && <Check><Icon>check</Icon></Check>}
           {item}
         </Item>)}

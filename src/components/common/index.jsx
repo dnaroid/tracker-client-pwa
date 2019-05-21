@@ -7,7 +7,9 @@ export { default as TextInput } from './TextInput'
 
 export const Main = styled.main`
   width: 100%;
+  margin-top: 30px;
   padding: 20px;
+  min-height: calc(100vh - 30px);
 `
 
 export const Card = styled.div`
@@ -23,12 +25,15 @@ export const Button = styled.div`
   border-radius: 4px;
 `
 
+export const Expander = styled.div`
+  flex: 2;
+`
+
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: ${p => p.start ? 'flex-start' : `space-between;
-  > div { width: 100%; }`}; 
+  justify-content: ${p => p.start ? 'flex-start' : `space-between;`}; 
   > div { margin-left: 20px; } 
   > div:first-child { margin-left: 0; }
 `

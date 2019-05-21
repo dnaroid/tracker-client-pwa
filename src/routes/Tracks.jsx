@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { ROUTE } from '../config/strings'
+import { Col } from '../components/common'
 
 export default connect()(() => {
 
@@ -9,16 +9,9 @@ export default connect()(() => {
   }, [])
 
   return (
-    <div>
-      <a href={ROUTE.TRACK}>
-        + ADD TRACK
-      </a>
-      {Object.values([{/*tracks*/ }]).map(t =>
-        <div key={t.number}>
-          {t.number}
-        </div>
-      )}
-    </div>
+    <Col>
+      TRACKS
+    </Col>
   )
 
 })

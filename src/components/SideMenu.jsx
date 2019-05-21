@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-
 import styled from 'styled-components/macro'
-import { ROUTE } from '../config/strings'
+import { ROUTE_ICON, ROUTE_NAME, ROUTE_NEED_AUTH, SIDE_MENU_ITEMS } from '../config/strings'
 import { redirect } from '../helpers/browser'
 import { Col, Drawer, Icon, Row } from './common'
 
@@ -22,10 +21,6 @@ export default ({ user: { logged } }) => {
     setDrawerActive(!drawerActive)
   }
 
-  const go = route => () => {
-    redirect(route)
-  }
-
   return <>
     <Trigger>
       <Icon onClick={toggleDrawer}>menu</Icon>
@@ -35,21 +30,14 @@ export default ({ user: { logged } }) => {
       <nav>
         <Col>
 
-          <Row start onClick={go(ROUTE.AUTH)}>
-            <Icon>account_circle</Icon>
-            <MenuItem>Authorize</MenuItem>
-          </Row>
-
-          <Row start onClick={go(ROUTE.SETTINGS)}>
-            <Icon>settings</Icon>
-            <MenuItem>Settings</MenuItem>
-          </Row>
-
-          {logged &&
-           <Row start onClick={go(ROUTE.TRACKS)}>
-             <Icon>view_list</Icon>
-             <MenuItem>My Tracks</MenuItem>
-           </Row>}
+          {SIDE_MENU_ITEMS
+            .filter(route => logged || !ROUTE_NEED_AUTH[route])
+            .map(route =>
+              <Row key={route} start onClick={() => redirect(route)}>
+                <Icon>{ROUTE_ICON[route]}</Icon>
+                <MenuItem>{ROUTE_NAME[route]}</MenuItem>
+              </Row>
+            )}
 
         </Col>
       </nav>

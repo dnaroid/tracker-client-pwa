@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Button } from '../components/common'
+import { Col, TextInput } from '../components/common'
 
 export default connect()(
-  ({ track, updateTrackProp, submitTrack }) => <div>
-    <div>
-      {/*<TextInput*/}
-      {/*  onChange={v => updateTrackProp('number', v)}*/}
-      {/*  value={track.number}*/}
-      {/*  label='number'*/}
-      {/*/>*/}
-      {/*<TextInput*/}
-      {/*  onChange={v => updateTrackProp('title', v)}*/}
-      {/*  value={track.title}*/}
-      {/*  label='title'*/}
-      {/*/>*/}
+  ({ track, updateTrackProp, submitTrack }) => {
+
+    const [number, setNumber] = useState('')
+    const [title, setTitle] = useState('')
+
+    return <div>
+      <Col>
+        <TextInput
+          onChange={setNumber}
+          value={number}
+          label='track number'
+        />
+        <TextInput
+          onChange={setTitle}
+          value={title}
+          label='description'
+          multiline
+          rows={4}
+        />
+      </Col>
     </div>
-    <div>
-      <Button onClick={submitTrack}>Create</Button>
-      <Button onClick={console.log}>Cancel</Button>
-    </div>
-  </div>)
+  })

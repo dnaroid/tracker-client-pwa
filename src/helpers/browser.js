@@ -24,4 +24,7 @@ export const updateTheme = theme => {
   document.body.style = THEME_STYLE[theme]
 }
 
-export const redirect = url => history.push(url)
+export const redirect = (url, props = {}) => history.push(url, props)
+console.log('history:', history)
+
+export const redirectBack = () => history.goBack()

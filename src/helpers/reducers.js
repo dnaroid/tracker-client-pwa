@@ -6,12 +6,11 @@ const _updaters = {
 export const setIn = (...args) => {
   try {
     return _updaters[args.length](args)
-  }
-  catch (e) { console.error('[setIn] Invalid path length: ' + args.join(' ')) }
+  } catch (e) { console.error('[setIn] Invalid path length: ' + args.join(' ')) }
   return args[0]
 }
 
-export const createReducer = (initialState, handlers) =>
+export const createReducer = (handlers, initialState = {}) =>
   (state = initialState, action) =>
     handlers.hasOwnProperty(action.type)
       ? handlers[action.type](state, action)

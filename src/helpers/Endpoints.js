@@ -1,4 +1,4 @@
-import { ROUTE, TOKEN } from '../config/strings'
+import { ROUTE, LOCAL_STORAGE } from '../config/strings'
 import { loadString, redirect } from './browser'
 
 export default class Endpoints {
@@ -27,7 +27,7 @@ class Endpoint {
 
   static _getHeaders() {
     return {
-      Authorization: `Bearer ${loadString(TOKEN, '')}`,
+      Authorization: `Bearer ${loadString(LOCAL_STORAGE.TOKEN, '')}`,
       'Content-Type': 'application/json'
     }
   }

@@ -1,12 +1,10 @@
 import { ActionsCreator } from '../helpers/actions'
 
-const scope = 'settings'
-const make = new ActionsCreator(scope)
+const make = new ActionsCreator('settings')
 
 export default {
-  [scope]: {
-    setTheme: make.action('setTheme'),
+  update: make.action('update'),
+  setTheme: make.action('setTheme'),
 
-    initApp: make.asyncAction('initApp')
-  }
+  initApp: make.asyncAction('initApp')
 }

@@ -7,21 +7,26 @@ import Settings from './Settings'
 import Track from './Track'
 import Tracks from './Tracks'
 
-export default ({ user: { logged, checked } }) => checked ? <>
+export default ({ user: { logged, checked } }) => {
 
-  {!logged &&
-   <Switch>
-     <Route exact path={ROUTE.AUTH} component={Auth} />
-     <Route component={NotFound} />
-   </Switch>}
+  if (!checked) { return null }
 
-  {logged &&
-   <Switch>
-     <Route exact path={ROUTE.TRACKS} component={Tracks} />
-     <Route exact path={`${ROUTE.TRACK}/:number`} component={Track} />
-     <Route exact path={ROUTE.SETTINGS} component={Settings} />
-     <Route exact path={ROUTE.AUTH} component={Auth} />
-     <Route component={NotFound} />
-   </Switch>}
+  return <>
 
-</> : null
+    {!logged &&
+     <Switch>
+       <Route exact path={ROUTE.AUTH} component={Auth} />
+       <Route component={NotFound} />
+     </Switch>}
+
+    {logged &&
+     <Switch>
+       <Route exact path={ROUTE.AUTH} component={Auth} />
+       <Route exact path={ROUTE.TRACK} component={Track} />
+       <Route exact path={ROUTE.TRACKS} component={Tracks} />
+       <Route exact path={ROUTE.SETTINGS} component={Settings} />
+       <Route component={NotFound} />
+     </Switch>}
+
+  </>
+}
