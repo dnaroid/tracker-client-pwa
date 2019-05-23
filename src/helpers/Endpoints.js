@@ -14,16 +14,28 @@ export default class Endpoints {
 }
 
 class Endpoint {
+  //_isCollection = false
 
   constructor(url) {
     this._url = url
   }
 
+  param = p => {
+    this._url = `${this._url}/${p}`
+    return this
+  }
+
+  //get collection() {
+  //  this._isCollection = true
+  //  return this
+  //}
+
+  //get = () => this._getRequest(`${this._url}${this._isCollection ? 's' : ''}`, { method: 'GET' })
   get = () => this._getRequest(this._url, { method: 'GET' })
 
-  collection = () => this._getRequest(`${this._url}s`, { method: 'GET' })
-
   post = (data) => this._getRequest(this._url, { method: 'POST', body: JSON.stringify(data) })
+
+  put = (data) => this._getRequest(this._url, { method: 'PUT', body: JSON.stringify(data) })
 
   static _getHeaders() {
     return {

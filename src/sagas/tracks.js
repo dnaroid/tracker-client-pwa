@@ -5,7 +5,7 @@ import { ROUTE } from '../config/strings'
 import { redirect } from '../helpers/browser'
 
 function* fetch() {
-  const { data, message } = yield call(endpoints.track.collection)
+  const { data, message } = yield call(endpoints.tracks.get)
   if (data) {
     yield put({ type: actions.tracks.fetch.success, data })
   } else {

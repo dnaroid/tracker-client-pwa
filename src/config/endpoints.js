@@ -13,5 +13,6 @@ export default {
   logout: ep.add('logout'),
   status: ep.add('status'),
 
-  track: ep.add('track')
+  track: ep.add('track'),
+  tracks: ep.add('tracks')
 }

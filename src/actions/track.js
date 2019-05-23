@@ -5,5 +5,6 @@ const make = new ActionsTypeCreator('track')
 export default {
   update: make.action('update'),
 
-  submit: make.asyncAction('submit')
+  submit: make.asyncAction('submit'),
+  fetch: make.asyncAction('fetch')
 }

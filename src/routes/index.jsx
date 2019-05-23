@@ -24,6 +24,7 @@ export default ({ user: { logged, checked } }) => {
      <Switch>
        <Route exact path={ROUTE.AUTH} component={Auth} />
        <Route exact path={ROUTE.TRACK} component={Track} />
+       <Route exact path={`${ROUTE.TRACK}/:id`} component={Track} />
        <Route exact path={ROUTE.TRACKS} component={Tracks} />
        <Route exact path={ROUTE.SETTINGS} component={Settings} />
        <Route component={NotFound} />

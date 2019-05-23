@@ -70,7 +70,7 @@ const Wrapper = styled.div`
     content: "${p => p.label}";
     position: absolute;
     font-size: 10px;
-    top: -6px;
+    top: -8px;
     left: 5px;
     padding: 0 2px;
     text-transform: uppercase;
@@ -80,7 +80,7 @@ const Wrapper = styled.div`
     content: "${p => p.error}";
     position: absolute;
     font-size: 10px;
-    bottom: -6px;
+    bottom: -8px;
     left: 5px;
     padding: 0 2px;
     text-transform: uppercase;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import actions from '../actions'
 import { Col, TextInput } from '../components/common'
@@ -6,7 +6,11 @@ import Validator from '../components/common/Validator'
 import validators from '../helpers/validators'
 
 export default connect(s => ({ track: s.track }))(
-  ({ dispatch, track }) => {
+  ({ dispatch, track, match: { params } }) => {
+
+    useEffect(() => {
+      dispatch({ type: actions.track.fetch.request, id: params.id })
+    }, [])
 
     const update = field => value => {
       if (track[field] === value) { return }
