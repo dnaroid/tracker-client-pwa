@@ -1,4 +1,4 @@
-import { ROUTE, LOCAL_STORAGE } from '../config/strings'
+import { LOCAL_STORAGE, ROUTE } from '../config/strings'
 import { loadString, redirect } from './browser'
 
 export default class Endpoints {
@@ -42,7 +42,7 @@ class Endpoint {
         if (err.status && err.status === 401) {
           setTimeout(() => redirect(ROUTE.AUTH))
         }
-        return err
+        return err.json()
       })
 
 }

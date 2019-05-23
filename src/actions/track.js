@@ -1,9 +1,9 @@
-import { ActionsCreator } from '../helpers/actions'
+import { ActionsTypeCreator } from '../helpers/actions'
 
-const make = new ActionsCreator('track')
+const make = new ActionsTypeCreator('track')
 
 export default {
   update: make.action('update'),
 
-  submitReq: make.asyncAction('submitReq')
+  submit: make.asyncAction('submit')
 }

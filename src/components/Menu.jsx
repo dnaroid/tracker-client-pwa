@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import actions from '../actions'
 import { ROUTE } from '../config/strings'
 import { redirect, redirectBack } from '../helpers/browser'
-import { Icon } from './common'
+import { Button, Icon } from './common'
 
-export default connect(s => ({ router: s.router }))(
-  ({ dispatch, router: { location } }) => {
+export default connect(s => ({ router: s.router, track: s.track }))(
+  ({ dispatch, track, router: { location } }) => {
 
     switch(location.pathname) {
 
@@ -14,8 +15,16 @@ export default connect(s => ({ router: s.router }))(
 
     case(ROUTE.TRACK):
       return <>
-        <Icon onClick={() => {dispatch()}}>save</Icon>
-        <Icon onClick={() => {redirectBack()}}>cancel</Icon>
+
+        <Button
+          noBorder
+          disabled={!track.valid}
+          onClick={() => {dispatch({ type: actions.track.submit.request })}}
+        >
+          <Icon>save</Icon>
+        </Button>
+
+        <Button noBorder><Icon onClick={() => {redirectBack()}}>cancel</Icon></Button>
       </>
 
     default:

@@ -1,6 +1,6 @@
-import { ActionsCreator } from '../helpers/actions'
+import { ActionsTypeCreator } from '../helpers/actions'
 
-const make = new ActionsCreator('router')
+const make = new ActionsTypeCreator('router')
 
 export default {
   updateLocation: make.action('updateLocation')

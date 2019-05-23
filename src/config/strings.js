@@ -2,6 +2,12 @@ export const GLOBAL = window
 
 export const DEVELOPMENT = GLOBAL && GLOBAL.location.hostname === 'localhost'
 
+export const TEXT_SIZE = {
+  BIG: 24,
+  DEFAULT: 16,
+  SMALL: 12
+}
+
 export const ROUTE = {
   AUTH: '/auth',
   TRACKS: '/',
@@ -38,8 +44,8 @@ export const THEME = {
 }
 
 export const THEME_STYLE = {
-  [THEME.DARK]: 'background-color: black; color: white;',
-  [THEME.LIGHT]: 'background-color: white; color: black;'
+  [THEME.DARK]: `background-color: black; color: white; font-size: ${TEXT_SIZE.DEFAULT}px`,
+  [THEME.LIGHT]: `background-color: white; color: black; font-size: ${TEXT_SIZE.DEFAULT}px`
 }
 
 export const LOCAL_STORAGE = {
@@ -52,3 +58,14 @@ export const STATUS = {
   SUCCESS: 'success',
   FAIL: 'fail'
 }
+
+export const VALIDATION_ERROR = {
+  email: 'Invalid email',
+  trackNumber: 'Invalid track number',
+  password: 'At least 6 chars'
+}
+
+export const COLOR = {
+  ERROR: '#ff8e8f'
+}
+

@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import actions from '../actions'
-import { Button, Col, TextInput } from '../components/common'
+import { Button, Col, Error, TextInput, Validator } from '../components/common'
+import validators from '../helpers/validators'
+
+const FIELD = {
+  EMAIL: 'email',
+  PASSWORD: 'password',
+  VALID: 'valid'
+}
 
 export default connect(s => ({ user: s.user }))(
   ({ user, dispatch }) => {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const update = field => value => {
+      dispatch({ type: actions.user.update, object: { [field]: value } })
+    }
 
     const login = () => {
-      dispatch({ type: actions.user.login.request, email, password })
+      dispatch({ type: actions.user.login.request })
     }
+
     const register = () => {
-      dispatch({ type: actions.user.register.request, email, password })
+      dispatch({ type: actions.user.register.request })
     }
 
     return <Col>
@@ -23,26 +32,31 @@ export default connect(s => ({ user: s.user }))(
         </Button>
         :
         <form>
-          <Col>
-            <TextInput
-              onChange={setEmail}
-              value={email}
-              label='email'
-              type='email'
-              name='email'
-              autocomplete='username'
-            />
-            <TextInput
-              onChange={setPassword}
-              value={password}
-              label='password'
-              type='password'
-              name='password'
-              autocomplete='current-password'
-            />
-            <Button onClick={login}>Login</Button>
-            <Button link onClick={register}>Register</Button>
-          </Col>
+          <Validator onValidate={update(FIELD.VALID)}>
+            <Col>
+              <Error> {user.error} </Error>
+              <TextInput
+                onChange={update(FIELD.EMAIL)}
+                value={user.email}
+                validator={validators.email}
+                label={FIELD.EMAIL}
+                type={FIELD.EMAIL}
+                name={FIELD.EMAIL}
+                autocomplete='username'
+              />
+              <TextInput
+                onChange={update(FIELD.PASSWORD)}
+                value={user.password}
+                validator={validators.password}
+                label={FIELD.PASSWORD}
+                type={FIELD.PASSWORD}
+                name={FIELD.PASSWORD}
+                autocomplete='current-password'
+              />
+              <Button disabled={!user.valid} onClick={login}>Login</Button>
+              <Button disabled={!user.valid} onClick={register}>Register</Button>
+            </Col>
+          </Validator>
         </form>}
     </Col>
   })

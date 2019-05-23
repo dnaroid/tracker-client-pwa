@@ -3,8 +3,9 @@ import { THEME_STYLE } from '../config/strings'
 
 export const history = createBrowserHistory()
 
-export const saveString = (key, value) =>
+export const saveString = (key, value) => {
   localStorage.setItem(key, value)
+}
 
 export const loadString = (key, defaultValue = 'null') =>
   localStorage.getItem(key) || defaultValue
@@ -24,7 +25,10 @@ export const updateTheme = theme => {
   document.body.style = THEME_STYLE[theme]
 }
 
-export const redirect = (url, props = {}) => history.push(url, props)
-console.log('history:', history)
+export const redirect = (url, props = {}) => {
+  history.push(url, props)
+}
 
-export const redirectBack = () => history.goBack()
+export const redirectBack = () => {
+  history.goBack()
+}

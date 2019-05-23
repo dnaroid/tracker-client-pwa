@@ -16,6 +16,7 @@ export default ({ user: { logged, checked } }) => {
     {!logged &&
      <Switch>
        <Route exact path={ROUTE.AUTH} component={Auth} />
+       <Route exact path={ROUTE.SETTINGS} component={Settings} />
        <Route component={NotFound} />
      </Switch>}
 

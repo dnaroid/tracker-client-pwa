@@ -1,17 +1,30 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Col } from '../components/common'
+import actions from '../actions'
+import { Col, Text } from '../components/common'
+import { ROUTE } from '../config/strings'
+import { redirect } from '../helpers/browser'
 
-export default connect()(() => {
+export default connect(s => ({ tracks: s.tracks }))(
+  ({ dispatch, tracks }) => {
 
-  useEffect(() => {
-    //syncTracks()
-  }, [])
+    useEffect(() => {
+      dispatch({ type: actions.tracks.fetch.request })
+    }, [])
 
-  return (
-    <Col>
-      TRACKS
+    const goToTrack = track => {
+      dispatch({ type: actions.track.update, object: track })
+      redirect(ROUTE.TRACK)
+    }
+
+    return <Col>
+
+      {Object.values(tracks).map((t =>
+          <div key={t.id} onClick={() => goToTrack(t)}>
+            <Text big> {t.number} </Text><br />
+            <Text small> {t.title} </Text>
+          </div>
+      )}
+
     </Col>
-  )
-
-})
+  })

@@ -1,9 +1,9 @@
-import { ActionsCreator } from '../helpers/actions'
+import { ActionsTypeCreator } from '../helpers/actions'
 
-const make = new ActionsCreator('user')
+const make = new ActionsTypeCreator('user')
 
 export default {
-  updateField: make.action('updateField'),
+  update: make.action('update'),
 
   login: make.asyncAction('login'),
   logout: make.asyncAction('logout'),

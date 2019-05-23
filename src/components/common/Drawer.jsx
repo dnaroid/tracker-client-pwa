@@ -1,5 +1,15 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { Cover } from './index'
+
+export default ({ active, onClose, children }) =>
+  <>
+    {active &&
+     <Cover onClick={onClose} />}
+    <Content onClick={onClose} active={active}>
+      {children}
+    </Content>
+  </>
 
 const Content = styled.div`
   z-index: 3000;
@@ -13,23 +23,3 @@ const Content = styled.div`
   overflow-x: hidden;
   transition: .25s ease-in-out;
  `
-const Cover = styled.div`
-  z-index: 2500;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-  opacity: 0.7;
- `
-
-export default ({ active, onClose, children }) => {
-
-  return <>
-    {active &&
-     <Cover onClick={onClose} />}
-    <Content onClick={onClose} active={active}>
-      {children}
-    </Content>
-  </>
-}

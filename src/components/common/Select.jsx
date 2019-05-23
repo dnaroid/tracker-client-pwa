@@ -1,73 +1,74 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
-import { Card, Icon } from './index'
-import Popup from './Popup'
+import { Cover } from './index'
+
+export default ({ items, value, label, disabled, onChange = () => {} }) => {
+
+  const [active, setActive] = useState(false)
+
+  return <>
+    <Wrapper disabled={disabled} active={active} label={label}>
+      {active ?
+        items.map(item =>
+          <Item
+            key={item}
+            onClick={() => {
+              setActive(false)
+              onChange(item)
+            }}
+            selected={item === value}
+          >
+            {item}
+          </Item>)
+        :
+        <Value onClick={() => setActive(true)}>
+          {value}
+        </Value>}
+    </Wrapper>
+    {active && <Cover onClick={() => setActive(false)} />}
+  </>
+}
 
 const Wrapper = styled.div`
   position: relative;
-  height: 30px;
   border: 1px solid currentColor;
   border-radius: 4px;
+  :before {
+    content: "${p => p.label}";
+    position: absolute;
+    font-size: 10px;
+    top: -6px;
+    left: 5px;
+    padding: 0 2px;
+    text-transform: uppercase;
+    background-color: inherit;
+  }
+  ${p => p.disabled && 'pointer-events: none; opacity: 0.3;'}
+  ${p => p.active && 'z-index: 2000;'}
  `
 const Value = styled.div`
   line-height: 28px;
   padding: 0 8px;
-  :hover { opacity: 0.5; }
   background-color: transparent;
+  :hover { opacity: 0.5; }
+  :after {
+    position: absolute;
+    content: 'expand_more';
+    font-family: 'Material Icons';
+    right: 4px;
+  }
  `
 export const Item = styled.div`
   position: relative;
   white-space: nowrap;
   padding: 20px 20px 20px 30px;
+  background-color: transparent;
   :hover { opacity: 0.5; }
- `
-const Check = styled.div`
-  position: absolute;
-  margin-left: -38px;
-  margin-top: -5px;
- `
-const Caret = styled.span`
-  position: absolute;
-  right: 0;
- `
-const Label = styled.div`
-  position: absolute;
-	font-size: 10px;
-  top: -6px;
-  left: 5px;
-  padding: 0 2px;
-  text-transform: uppercase;
+  ${p => p.selected && `
+  :before {
+    position: absolute;
+    content: 'check';
+    font-family: 'Material Icons';
+    left: 10px;
+  }`}
 `
-const CardLabel = styled.div`
-  position: absolute;
-	font-size: 10px;
-  margin-top: -26px;
-  margin-left: -15px;
-  padding: 0 2px;
-  text-transform: uppercase;
-`
-
-export default ({ items, value, label, onChange }) =>
-  <Popup
-    trigger={
-      <Wrapper>
-        <Value>
-          {value}
-          <Caret><Icon>expand_more</Icon></Caret>
-        </Value>
-        <Label>{label}</Label>
-      </Wrapper>
-    }
-  >
-    <Card>
-      <CardLabel>{label}</CardLabel>
-      {items.map(item =>
-        <Item
-          key={item}
-          onClick={() => {onChange && onChange(item)}}
-        >
-          {item === value && <Check><Icon>check</Icon></Check>}
-          {item}
-        </Item>)}
-    </Card>
-  </Popup>

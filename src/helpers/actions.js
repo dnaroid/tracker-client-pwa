@@ -1,6 +1,6 @@
 import { STATUS } from '../config/strings'
 
-export class ActionsCreator {
+export class ActionsTypeCreator {
   constructor(scope) {
     this._scope = scope
   }

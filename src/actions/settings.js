@@ -1,6 +1,6 @@
-import { ActionsCreator } from '../helpers/actions'
+import { ActionsTypeCreator } from '../helpers/actions'
 
-const make = new ActionsCreator('settings')
+const make = new ActionsTypeCreator('settings')
 
 export default {
   update: make.action('update'),
