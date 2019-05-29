@@ -1,16 +1,15 @@
 import actions from '../actions'
-import { createReducer, mergeIn } from '../helpers/reducers'
+import { createReducer, setIn } from '../helpers/reducers'
+
+const initialState = {
+  currentId: null,
+  all: {}
+}
 
 export default createReducer({
 
-  [actions.track.update]: (s, a) => mergeIn(s, a.object),
+  [actions.track.fetchAll.success.type]: (s, a) => setIn(s, 'all', a.payload),
 
-  [actions.track.submit.success]: (s, a) => ({ number: '', title: '', valid: false }),
+  [actions.track.setCurrentId.type]: (s, a) => setIn(s, 'currentId', a.id)
 
-  [actions.track.fetch.success]: (s, a) => a.data
-
-}, {
-  number: '',
-  title: '',
-  valid: false
-})
+}, initialState)

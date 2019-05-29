@@ -69,3 +69,8 @@ export const COLOR = {
   ERROR: '#ff8e8f'
 }
 
+export const Z_INDEX = {
+  COVER: 1000,
+  POPUP: 2000,
+  DRAWER: 3000
+}

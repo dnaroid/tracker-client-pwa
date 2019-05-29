@@ -1,10 +1,10 @@
-import { ActionsTypeCreator } from '../helpers/actions'
+import { ActionCreator } from '../helpers/ActionCreator'
 
-const make = new ActionsTypeCreator('settings')
+const make = new ActionCreator('settings')
 
 export default {
-  update: make.action('update'),
-  setTheme: make.action('setTheme'),
+  update: make.action('update', 'settings'),
+  setTheme: make.action('setTheme', 'theme'),
 
   initApp: make.asyncAction('initApp')
 }

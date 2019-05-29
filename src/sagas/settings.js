@@ -1,6 +1,6 @@
 import { all, put, select, takeLatest } from 'redux-saga/effects'
 import actions from '../actions'
-import { LOCAL_STORAGE, THEME } from '../config/strings'
+import { LOCAL_STORAGE } from '../config/constants'
 import { loadObject, saveObject, updateTheme } from '../helpers/browser'
 
 function* saveSettings() {
@@ -14,14 +14,13 @@ function* setTheme({ theme }) {
 }
 
 function* initSettings() {
-  const settings = loadObject(LOCAL_STORAGE.SETTINGS, { theme: THEME.LIGHT })
-  yield put({ type: actions.settings.update, settings })
-  updateTheme(settings.theme)
+  const settings = loadObject(LOCAL_STORAGE.SETTINGS)
+  yield put(actions.settings.update(settings))
 }
 
 export default function* () {
   yield all([
-    takeLatest(actions.settings.initApp.request, initSettings),
-    takeLatest(actions.settings.setTheme, setTheme)
+    takeLatest(actions.settings.initApp.request.type, initSettings),
+    takeLatest(actions.settings.setTheme.type, setTheme)
   ])
 }

@@ -1,4 +1,4 @@
-import { VALIDATION_ERROR } from '../config/strings'
+import { VALIDATION_ERROR } from '../config/constants'
 
 export default {
 

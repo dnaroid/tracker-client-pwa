@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
-import { COLOR } from '../../config/strings'
+import { COLOR } from '../../config/constants'
 import { Icon } from './index'
 
 export default ({
@@ -8,6 +8,7 @@ export default ({
                   rows,
                   label,
                   focus,
+                  selected,
                   icon,
                   withClear,
                   disabled,
@@ -20,11 +21,8 @@ export default ({
 
   useEffect(() => {
     focus && inputRef.current.focus()
+    selected && inputRef.current.selectAll()
   }, [])
-
-  const selectAll = () => {
-    inputRef.current.select()
-  }
 
   const clear = () => {
     onChange('')
@@ -39,7 +37,6 @@ export default ({
       <TextArea
         {...attrs}
         ref={inputRef}
-        onClick={selectAll}
         rows={rows}
         value={value}
         onChange={e => { onChange(e.target.value) }}
@@ -49,7 +46,6 @@ export default ({
         {...attrs}
         ref={inputRef}
         value={value}
-        onClick={selectAll}
         onChange={e => { onChange(e.target.value) }}
       />}
     {(withClear && !rows) &&

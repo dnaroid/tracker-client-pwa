@@ -1,20 +1,20 @@
 import actions from '../actions'
 import { createReducer, mergeIn } from '../helpers/reducers'
 
-const authSuccess = (s) => mergeIn(s, { logged: true, checked: true, error: null })
-const authFail = (s, a) => mergeIn(s, { logged: false, checked: true, error: a.message })
+const requestSuccess = (s) => mergeIn(s, { logged: true, checked: true, error: null })
+const requestFail = (s, a) => mergeIn(s, { logged: false, checked: true, error: a.payload })
 
 export default createReducer({
 
-  [actions.user.update]: (s, a) => mergeIn(s, a.object),
+  [actions.user.update.type]: (s, a) => mergeIn(s, a.user),
 
-  [actions.user.login.success]: authSuccess,
-  [actions.user.login.fail]: authFail,
+  [actions.user.login.success.type]: requestSuccess,
+  [actions.user.login.fail.type]: requestFail,
 
-  [actions.user.register.success]: authSuccess,
-  [actions.user.register.fail]: authFail,
+  [actions.user.register.success.type]: requestSuccess,
+  [actions.user.register.fail.type]: requestFail,
 
-  [actions.user.logout.success]: (s) => mergeIn(s, { logged: false, checked: true })
+  [actions.user.logout.success.type]: (s) => mergeIn(s, { logged: false, checked: true })
 
 }, {
   logged: false,

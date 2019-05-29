@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
+import { Z_INDEX } from '../../config/constants'
+import useSwitch from '../../hooks/useSwitch'
 import { Cover } from './index'
 
 export default ({ items, value, label, disabled, onChange = () => {} }) => {
 
-  const [active, setActive] = useState(false)
+  const [active, toggle] = useSwitch(false)
 
   return <>
     <Wrapper disabled={disabled} active={active} label={label}>
@@ -13,7 +15,7 @@ export default ({ items, value, label, disabled, onChange = () => {} }) => {
           <Item
             key={item}
             onClick={() => {
-              setActive(false)
+              toggle(false)
               onChange(item)
             }}
             selected={item === value}
@@ -21,11 +23,11 @@ export default ({ items, value, label, disabled, onChange = () => {} }) => {
             {item}
           </Item>)
         :
-        <Value onClick={() => setActive(true)}>
+        <Value onClick={() => toggle(true)}>
           {value}
         </Value>}
     </Wrapper>
-    {active && <Cover onClick={() => setActive(false)} />}
+    {active && <Cover onClick={() => toggle(false)} />}
   </>
 }
 
@@ -44,7 +46,7 @@ const Wrapper = styled.div`
     background-color: inherit;
   }
   ${p => p.disabled && 'pointer-events: none; opacity: 0.3;'}
-  ${p => p.active && 'z-index: 2000;'}
+  ${p => p.active && `z-index: ${Z_INDEX.POPUP};`}
  `
 const Value = styled.div`
   line-height: 28px;

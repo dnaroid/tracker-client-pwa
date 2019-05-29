@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE, ROUTE } from '../config/strings'
+import { LOCAL_STORAGE, ROUTE } from '../config/constants'
 import { loadString, redirect } from './browser'
 
 export default class Endpoints {
@@ -9,33 +9,39 @@ export default class Endpoints {
   }
 
   add(url) {
-    return new Endpoint(`${this._host}/${url}`)
+    return new Endpoint([this._host, ...url.split('/')])
   }
 }
 
 class Endpoint {
-  //_isCollection = false
+  _paramsArray = null
 
-  constructor(url) {
-    this._url = url
+  constructor(path) {
+    this._pathArray = path
   }
 
-  param = p => {
-    this._url = `${this._url}/${p}`
+  params = obj => {
+    this._paramsArray = Object.entries(obj)
     return this
   }
 
-  //get collection() {
-  //  this._isCollection = true
-  //  return this
-  //}
+  get = () => this._getRequest(this._getURL(), { method: 'GET' })
 
-  //get = () => this._getRequest(`${this._url}${this._isCollection ? 's' : ''}`, { method: 'GET' })
-  get = () => this._getRequest(this._url, { method: 'GET' })
+  post = (data) => this._getRequest(this._getURL(), { method: 'POST', body: JSON.stringify(data) })
 
-  post = (data) => this._getRequest(this._url, { method: 'POST', body: JSON.stringify(data) })
+  put = (data) => this._getRequest(this._getURL(), { method: 'PUT', body: JSON.stringify(data) })
 
-  put = (data) => this._getRequest(this._url, { method: 'PUT', body: JSON.stringify(data) })
+  del = () => this._getRequest(this._getURL(), { method: 'DELETE' })
+
+  _getURL = () => this._paramsArray
+    ? this._pathArray.map(this._paramsMapper).join('/')
+    : this._pathArray.join('/')
+
+  _paramsMapper = step => {
+    if (!step.startsWith(':')) { return step }
+    step = step.slice(1)
+    return this._paramsArray.find(([k]) => k === step)[1]
+  }
 
   static _getHeaders() {
     return {
@@ -54,7 +60,7 @@ class Endpoint {
         if (err.status && err.status === 401) {
           setTimeout(() => redirect(ROUTE.AUTH))
         }
-        return err.json()
+        return new Response(`{"error":"${err.message}", "status":${err.status || 500}}`).json()
       })
 
 }

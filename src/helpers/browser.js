@@ -1,5 +1,5 @@
 import { createBrowserHistory } from 'history'
-import { THEME_STYLE } from '../config/strings'
+import { THEME_STYLE } from '../config/constants'
 
 export const history = createBrowserHistory()
 

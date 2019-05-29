@@ -3,8 +3,8 @@ import { createReducer, setIn } from '../helpers/reducers'
 
 export default createReducer({
 
-  [actions.settings.setTheme]: (s, a) => setIn(s, 'theme', a.theme),
+  [actions.settings.setTheme.type]: (s, a) => setIn(s, 'theme', a.theme),
 
-  [actions.settings.update]: (s, a) => a.settings
+  [actions.settings.update.type]: (s, a) => a.settings
 
 })

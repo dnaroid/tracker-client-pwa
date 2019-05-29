@@ -1,26 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
+import { Z_INDEX } from '../../config/constants'
+import useSwitch from '../../hooks/useSwitch'
 import { Cover, Icon } from './index'
 
 export default ({ trigger, center, children }) => {
 
-  const [active, setActive] = useState(false)
+  const [active, toggle] = useSwitch(false)
 
   return <>
-    <div onClick={() => setActive(true)}>
+    <div onClick={() => toggle(true)}>
       {trigger || <Icon>menu</Icon>}
     </div>
     {active && <>
-      <Content onClick={() => setActive(false)} center={center} active={active}>
+      <Content onClick={() => toggle(false)} center={center} active={active}>
         {children}
       </Content>
-      <Cover onClick={() => setActive(false)} />
+      <Cover onClick={() => toggle(false)} />
     </>}
   </>
 }
 
 const Content = styled.div`
-  z-index: 2000;
+  z-index: ${Z_INDEX.POPUP};
   overflow: auto;
   transition: .25s ease-in-out;
   position: fixed;

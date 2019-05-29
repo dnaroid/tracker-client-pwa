@@ -1,30 +1,35 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import actions from '../actions'
+import useActionCreators from '../hooks/useActionCreators'
+import useRouter from '../hooks/useRouter'
+import useSelectors from '../hooks/useSelectors'
 import Routes from '../routes'
-import { Main } from './common'
-import Header from './Header'
+import { Main, MainShadow } from './common'
 import SideBar from './SideMenu'
 
-export default withRouter(connect(s => ({ user: s.user, router: s.router }))(
-  ({ dispatch, user, router, location }) => {
+export default () => {
 
-    useEffect(() => {
-      dispatch({ type: actions.settings.initApp.request })
-    }, [])
+  const [router] = useSelectors(s => s.router)
+  const { location } = useRouter()
 
-    useEffect(() => {
-      if (!router.location || router.location.pathname !== location.pathname) {
-        dispatch({ type: actions.router.updateLocation, location })
-      }
-    }, [location.pathname])
+  const [initApp, updateLocation] = useActionCreators(actions.settings.initApp.request, actions.router.updateLocation)
 
-    return <>
-      <Header user={user} location={location} />
-      <SideBar user={user} />
-      <Main>
-        <Routes user={user} />
-      </Main>
-    </>
-  }))
+  useEffect(() => {
+    initApp()
+  }, [])
+
+  useEffect(() => {
+    if (!router.location || router.location.pathname !== location.pathname) {
+      updateLocation(location)
+    }
+  }, [location.pathname])
+
+  return <>
+    <SideBar />
+    <MainShadow />
+    <Main>
+      <Routes />
+    </Main>
+    <MainShadow />
+  </>
+}

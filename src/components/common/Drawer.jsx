@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { Z_INDEX } from '../../config/constants'
 import { Cover } from './index'
 
 export default ({ active, onClose, children }) =>
@@ -12,7 +13,8 @@ export default ({ active, onClose, children }) =>
   </>
 
 const Content = styled.div`
-  z-index: 3000;
+  z-index: ${Z_INDEX.DRAWER};
+  min-width: 50%;
   position: fixed;
   overflow: auto;
   top: 0;
@@ -21,5 +23,5 @@ const Content = styled.div`
   border: 1px solid currentColor;
   padding: 20px;
   overflow-x: hidden;
-  transition: .25s ease-in-out;
+  transition: left .25s ease-in-out;
  `

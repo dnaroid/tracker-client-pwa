@@ -1,7 +1,9 @@
+import React from 'react'
 import styled from 'styled-components/macro'
-import { COLOR, TEXT_SIZE } from '../../config/strings'
+import { COLOR, TEXT_SIZE, Z_INDEX } from '../../config/constants'
 
 export { default as Drawer } from './Drawer'
+export { default as Button } from './Button'
 export { default as Popup } from './Popup'
 export { default as Select } from './Select'
 export { default as TextInput } from './TextInput'
@@ -11,25 +13,32 @@ export const Main = styled.main`
   width: 100%;
   margin-top: 30px;
   padding: 20px;
-  min-height: calc(100vh - 30px);
+  height: calc(100vh - 40px);
+`
+export const MainShadow = styled.main`
+    position: fixed;
+    opacity: 0.5;
+    height: 10px;
+    width: 100%;
+    z-index: 1000;
+`
+
+export const TopMenu = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0;
+  width: calc(100% - 30px);
+  > :first-child { 
+    flex: 2; 
+    text-align: right;
+  }
 `
 
 export const Card = styled.div`
   padding: 20px;
   border: 1px solid currentColor;
   border-radius: 4px;
-`
-
-export const Button = styled.div`
-  :hover { opacity: 0.5; }
-  height: 30px;
-  line-height: 30px;
-  border-radius: 4px;
-  text-align: center;
-  user-select: none;
-  width: ${p => p.compact && 'fit-content'};
-  ${p => p.disabled && 'pointer-events: none; opacity: 0.3;'}
-  ${p => !p.noBorder && 'padding: 0 10px;  border: 1px solid currentColor;'}
 `
 
 export const Expander = styled.div`
@@ -63,6 +72,7 @@ export const Icon = styled.div`
 `
 
 export const Cover = styled.div`
+  z-index: ${Z_INDEX.COVER};
   display: block;
   left: 0;
   top: 0;
@@ -71,7 +81,6 @@ export const Cover = styled.div`
   position: fixed;
   margin: 0!important;
   opacity: 0.7;
-  z-index: 1000;
  `
 
 export const Error = styled.div`

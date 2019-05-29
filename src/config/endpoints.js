@@ -1,5 +1,5 @@
 import Endpoints from '../helpers/Endpoints'
-import { DEVELOPMENT } from './strings'
+import { DEVELOPMENT } from './constants'
 
 const API_URL = DEVELOPMENT
   ? 'http://localhost:5000/api'
@@ -13,6 +13,6 @@ export default {
   logout: ep.add('logout'),
   status: ep.add('status'),
 
-  track: ep.add('track'),
+  track: ep.add('track/:id'),
   tracks: ep.add('tracks')
 }

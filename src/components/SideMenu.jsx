@@ -1,37 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
-import { ROUTE_ICON, ROUTE_NAME, ROUTE_NEED_AUTH, SIDE_MENU_ITEMS } from '../config/strings'
+import { ROUTE_ICON, ROUTE_NAME, ROUTE_NEED_AUTH, SIDE_MENU_ITEMS } from '../config/constants'
 import { redirect } from '../helpers/browser'
+import useSelectors from '../hooks/useSelectors'
+import useSwitch from '../hooks/useSwitch'
 import { Col, Drawer, Icon, Row } from './common'
 
-const Trigger = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-`
-const MenuItem = styled.div`
-  white-space: nowrap;
-`
+export default () => {
 
-export default ({ user: { logged } }) => {
-
-  const [drawerActive, setDrawerActive] = useState(false)
-
-  const toggleDrawer = () => {
-    setDrawerActive(!drawerActive)
-  }
+  const [user] = useSelectors(s => s.user)
+  const [drawerActive, switchDrawer] = useSwitch(false)
 
   return <>
     <Trigger>
-      <Icon onClick={toggleDrawer}>menu</Icon>
+      <Icon onClick={switchDrawer}>menu</Icon>
     </Trigger>
 
-    <Drawer active={drawerActive} onClose={toggleDrawer}>
+    <Drawer active={drawerActive} onClose={switchDrawer}>
       <nav>
         <Col>
-
           {SIDE_MENU_ITEMS
-            .filter(route => logged || !ROUTE_NEED_AUTH[route])
+            .filter(route => user.logged || !ROUTE_NEED_AUTH[route])
             .map(route =>
               <Row key={route} start onClick={() => redirect(route)}>
                 <Icon>{ROUTE_ICON[route]}</Icon>
@@ -44,4 +33,13 @@ export default ({ user: { logged } }) => {
     </Drawer>
   </>
 }
+
+const Trigger = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+`
+const MenuItem = styled.div`
+  white-space: nowrap;
+`
 

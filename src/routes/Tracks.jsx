@@ -1,29 +1,36 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
 import actions from '../actions'
-import { Col, Text } from '../components/common'
-import { ROUTE } from '../config/strings'
+import { Button, Col, Text, TopMenu } from '../components/common'
+import { ROUTE } from '../config/constants'
 import { redirect } from '../helpers/browser'
+import useActionCreators from '../hooks/useActionCreators'
+import useSelectors from '../hooks/useSelectors'
 
-export default connect(s => ({ tracks: s.tracks }))(
-  ({ dispatch, tracks }) => {
+export default () => {
 
-    useEffect(() => {
-      dispatch({ type: actions.tracks.fetch.request })
-    }, [])
+  const [track] = useSelectors(s => s.track)
 
-    const goToTrack = track => {
-      dispatch({ type: actions.track.update, object: track })
-      redirect(`${ROUTE.TRACK}/${track.id}`)
-    }
+  const [fetchAll, setCurrentId] = useActionCreators(actions.track.fetchAll.request, actions.track.setCurrentId)
 
-    return <Col>
+  useEffect(() => {
+    fetchAll()
+  }, [])
 
-      {Object.values(tracks).map(t =>
-        <div key={t.id} onClick={() => goToTrack(t)}>
-          <Text big> {t.number} </Text><br />
-          <Text small> {t.title} </Text>
+  const selectTrack = track => {
+    setCurrentId(track.id)
+    redirect(ROUTE.TRACK, track)
+  }
+
+  return <>
+    <TopMenu>
+      <Button linkTo={ROUTE.TRACK} icon='add_box'/>
+    </TopMenu>
+    <Col>
+      {Object.values(track.all).map(track =>
+        <div key={track.id} onClick={() => selectTrack(track)}>
+          <Text big> {track.number} </Text><br/>
+          <Text small> {track.title} </Text>
         </div>)}
-
     </Col>
-  })
+  </>
+}
